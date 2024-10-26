@@ -62,7 +62,7 @@ def download_pdf_from_url(url: str) -> NamedTemporaryFile:
         NamedTemporaryFile: The temporary file containing the downloaded PDF.
     """
     try:
-        response = requests.get(url, stream=True)
+        response = requests.get(url, stream=True, timeout=60)
         response.raise_for_status()
         temp_pdf = NamedTemporaryFile(delete=False, suffix=".pdf")
         for chunk in response.iter_content(chunk_size=8192):
