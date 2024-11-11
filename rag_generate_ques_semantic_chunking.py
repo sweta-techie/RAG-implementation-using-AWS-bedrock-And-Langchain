@@ -12,6 +12,7 @@ import fitz  # PyMuPDF for PDF processing
 
 import openai
 from openai import AuthenticationError, RateLimitError, OpenAIError
+from security import safe_requests
 
 # -----------------------------
 # Streamlit Configuration
@@ -62,7 +63,7 @@ def download_pdf_from_url(url: str) -> NamedTemporaryFile:
         NamedTemporaryFile: The temporary file containing the downloaded PDF.
     """
     try:
-        response = requests.get(url, stream=True)
+        response = safe_requests.get(url, stream=True)
         response.raise_for_status()
         temp_pdf = NamedTemporaryFile(delete=False, suffix=".pdf")
         for chunk in response.iter_content(chunk_size=8192):
