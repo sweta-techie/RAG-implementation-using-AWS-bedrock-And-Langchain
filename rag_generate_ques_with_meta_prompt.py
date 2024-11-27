@@ -23,9 +23,9 @@ from keybert import KeyBERT
 import nltk
 import spacy
 from difflib import SequenceMatcher
-import random
 import fitz  # PyMuPDF
 import torch
+import secrets
 
 # -----------------------------
 # Streamlit Configuration
@@ -782,7 +782,7 @@ def main():
                 logger.debug(f"Number of chunks created: {len(chunks)}")
 
                 # Shuffle chunks to ensure diverse topics
-                random.shuffle(chunks)
+                secrets.SystemRandom().shuffle(chunks)
 
                 for idx, chunk in enumerate(chunks):
                     if len(generated_questions) >= num_questions:
