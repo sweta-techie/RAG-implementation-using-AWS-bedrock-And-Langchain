@@ -6,7 +6,6 @@ import requests
 from typing import List
 from tempfile import NamedTemporaryFile
 import time
-import random
 import uuid
 
 import streamlit as st
@@ -16,6 +15,8 @@ import openai
 from openai import RateLimitError, OpenAIError
 
 from dotenv import load_dotenv
+import secrets
+
 load_dotenv()
 import sys
 import nltk
@@ -253,7 +254,7 @@ def fetch_answer_with_backoff(question: str, text: str, max_retries: int = 3) ->
         try:
             return fetch_answer(question, text)
         except RateLimitError:
-            wait_time = (2 ** attempt) + random.uniform(0, 1)
+            wait_time = (2 ** attempt) + secrets.SystemRandom().uniform(0, 1)
             st.warning(f"Rate limit exceeded. Retrying in {wait_time:.2f} seconds...")
             time.sleep(wait_time)
         except OpenAIError as e:

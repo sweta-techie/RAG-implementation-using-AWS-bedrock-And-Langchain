@@ -6,7 +6,6 @@ import re
 from typing import List, Dict, Any, Tuple
 from tempfile import NamedTemporaryFile
 import io
-import random
 import uuid
 
 import streamlit as st
@@ -29,6 +28,7 @@ import nltk  # For sentence tokenization
 
 import spacy  # For Named Entity Recognition
 from difflib import SequenceMatcher  # For fuzzy matching
+import secrets
 
 # -----------------------------
 # Streamlit Configuration
@@ -754,7 +754,7 @@ def main():
                 logger.debug(f"Number of chunks created: {len(chunks)}")
 
                 # Shuffle chunks to ensure diverse topics
-                random.shuffle(chunks)
+                secrets.SystemRandom().shuffle(chunks)
 
                 for idx, chunk in enumerate(chunks):
                     if len(generated_questions) >= num_questions:
